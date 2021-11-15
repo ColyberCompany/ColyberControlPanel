@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SensorReadings">
+
+    <TextView
+        android:id="@+id/textViewAcc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:alpha="0.5"
+        android:text="Accelerometer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/textViewAccX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/XAxisLabel"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@+id/editTextAccX"
+        app:layout_constraintStart_toStartOf="@+id/editTextAccX"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAcc" />
+
+    <EditText
+        android:id="@+id/editTextAccX"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="-1.234"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAccX" />
+
+    <TextView
+        android:id="@+id/textViewAccY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/YAxisLabel"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@+id/editTextAccY"
+        app:layout_constraintStart_toStartOf="@+id/editTextAccY"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAcc" />
+
+    <EditText
+        android:id="@+id/editTextAccY"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="-1.234"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/editTextAccZ"
+        app:layout_constraintStart_toEndOf="@+id/editTextAccX"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAccY" />
+
+    <TextView
+        android:id="@+id/textViewAccZ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ZAxisLabel"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@+id/editTextAccZ"
+        app:layout_constraintStart_toStartOf="@+id/editTextAccZ"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAcc" />
+
+    <EditText
+        android:id="@+id/editTextAccZ"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="-1.234"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAccZ" />
+
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/textViewGyro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:alpha="0.5"
+        android:text="Gyroscope:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextAccY" />
+
+    <TextView
+        android:id="@+id/textViewGyroX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/XAxisLabel"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@+id/editTextGyroX"
+        app:layout_constraintStart_toStartOf="@+id/editTextGyroX"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGyro" />
+
+    <EditText
+        android:id="@+id/editTextGyroX"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="-1.234"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGyroX" />
+
+    <TextView
+        android:id="@+id/textViewGyroY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/YAxisLabel"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@+id/editTextGyroY"
+        app:layout_constraintStart_toStartOf="@+id/editTextGyroY"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGyro" />
+
+    <EditText
+        android:id="@+id/editTextGyroY"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="-1.234"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/editTextGyroZ"
+        app:layout_constraintStart_toEndOf="@+id/editTextGyroX"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGyroY" />
+
+    <TextView
+        android:id="@+id/textViewGyroZ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ZAxisLabel"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@+id/editTextGyroZ"
+        app:layout_constraintStart_toStartOf="@+id/editTextGyroZ"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGyro" />
+
+    <EditText
+        android:id="@+id/editTextGyroZ"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="-1.234"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewGyroZ" />
+
+
+    <TextView
+        android:id="@+id/textViewMagn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:alpha="0.5"
+        android:text="Magnetometer:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextGyroY" />
+
+    <TextView
+        android:id="@+id/textViewMagnX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/XAxisLabel"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@+id/editTextMagnX"
+        app:layout_constraintStart_toStartOf="@+id/editTextMagnX"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMagn" />
+
+    <EditText
+        android:id="@+id/editTextMagnX"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="-1.234"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMagnX" />
+
+    <TextView
+        android:id="@+id/textViewMagnY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/YAxisLabel"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@+id/editTextMagnY"
+        app:layout_constraintStart_toStartOf="@+id/editTextMagnY"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMagn" />
+
+    <EditText
+        android:id="@+id/editTextMagnY"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="-1.234"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/editTextMagnZ"
+        app:layout_constraintStart_toEndOf="@+id/editTextMagnX"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMagnY" />
+
+    <TextView
+        android:id="@+id/textViewMagnZ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ZAxisLabel"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@+id/editTextMagnZ"
+        app:layout_constraintStart_toStartOf="@+id/editTextMagnZ"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMagn" />
+
+    <EditText
+        android:id="@+id/editTextMagnZ"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="-1.234"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMagnZ" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
