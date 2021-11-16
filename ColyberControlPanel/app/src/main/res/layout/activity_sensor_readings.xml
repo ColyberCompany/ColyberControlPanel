@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:alpha="0.5"
-        android:text="Accelerometer"
+        android:text="Accelerometer:"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -97,6 +98,7 @@
         android:layout_marginTop="8dp"
         android:alpha="0.5"
         android:text="Gyroscope:"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
@@ -169,6 +171,12 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewGyroZ" />
 
 
+
+
+
+
+
+
     <TextView
         android:id="@+id/textViewMagn"
         android:layout_width="wrap_content"
@@ -176,6 +184,7 @@
         android:layout_marginTop="8dp"
         android:alpha="0.5"
         android:text="Magnetometer:"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
@@ -246,6 +255,228 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewMagnZ" />
+
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/textViewPressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.5"
+        android:text="Pressure:"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewBtmRangefinder"
+        app:layout_constraintEnd_toEndOf="@+id/editTextPressure"
+        app:layout_constraintStart_toStartOf="@+id/editTextPressure" />
+
+    <EditText
+        android:id="@+id/editTextPressure"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="-1.234"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPressure" />
+
+    <TextView
+        android:id="@+id/textViewBtmRangefinder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:alpha="0.5"
+        android:text="Bottom\nrangefinder:"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/editTextBtmRangefinder"
+        app:layout_constraintStart_toStartOf="@+id/editTextBtmRangefinder"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMagnY" />
+
+    <EditText
+        android:id="@+id/editTextBtmRangefinder"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="-1.234"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBtmRangefinder" />
+
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/textViewPos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.5"
+        android:text="Position:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPressure" />
+
+    <TextView
+        android:id="@+id/textViewPosLong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Longitude:"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@+id/editTextPosLong"
+        app:layout_constraintStart_toStartOf="@+id/editTextPosLong"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPos" />
+
+    <EditText
+        android:id="@+id/editTextPosLong"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="-1.234"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPosLong" />
+
+    <TextView
+        android:id="@+id/textViewPosLat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Latitude"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@+id/editTextPosLat"
+        app:layout_constraintStart_toStartOf="@+id/editTextPosLat"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPos" />
+
+    <EditText
+        android:id="@+id/editTextPosLat"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="-1.234"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/editTextPosAlt"
+        app:layout_constraintStart_toEndOf="@+id/editTextPosLong"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPosLat" />
+
+    <TextView
+        android:id="@+id/textViewPosAlt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Altitude:"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@+id/editTextPosAlt"
+        app:layout_constraintStart_toStartOf="@+id/editTextPosAlt"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPos" />
+
+    <EditText
+        android:id="@+id/editTextPosAlt"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="-1.234"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPosAlt" />
+
+
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/textViewAngles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:alpha="0.5"
+        android:text="Angles:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPosLat" />
+
+    <TextView
+        android:id="@+id/textViewAngleX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/XAxisLabel"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@+id/editTextAngleX"
+        app:layout_constraintStart_toStartOf="@+id/editTextAngleX"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAngles" />
+
+    <EditText
+        android:id="@+id/editTextAngleX"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="-1.234"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAngleX" />
+
+    <TextView
+        android:id="@+id/textViewAngleY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/YAxisLabel"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@+id/editTextAngleY"
+        app:layout_constraintStart_toStartOf="@+id/editTextAngleY"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAngles" />
+
+    <EditText
+        android:id="@+id/editTextAngleY"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="-1.234"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/editTextAngleZ"
+        app:layout_constraintStart_toEndOf="@+id/editTextAngleX"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAngleY" />
+
+    <TextView
+        android:id="@+id/textViewAngleZ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ZAxisLabel"
+        android:alpha="0.5"
+        app:layout_constraintEnd_toEndOf="@+id/editTextAngleZ"
+        app:layout_constraintStart_toStartOf="@+id/editTextAngleZ"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAngles" />
+
+    <EditText
+        android:id="@+id/editTextAngleZ"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="-1.234"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAngleZ" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
