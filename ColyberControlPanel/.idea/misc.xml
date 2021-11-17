@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/janwi/Documents/GitHub/ColyberCompany/ColyberControlPanel/ColyberControlPanel/app/src/main/res/layout/activity_drone_position.xml" value="0.26132246376811596" />
         <entry key="..\:/Users/janwi/Documents/GitHub/ColyberCompany/ColyberControlPanel/ColyberControlPanel/app/src/main/res/layout/activity_main.xml" value="0.25833333333333336" />
         <entry key="..\:/Users/janwi/Documents/GitHub/ColyberCompany/ColyberControlPanel/ColyberControlPanel/app/src/main/res/layout/activity_sensor_readings.xml" value="0.27203647416413373" />
       </map>
