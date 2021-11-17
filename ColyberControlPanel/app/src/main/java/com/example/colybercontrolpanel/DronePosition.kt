@@ -2,7 +2,7 @@ package com.example.colybercontrolpanel
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.view.View
 import androidx.core.app.ActivityCompat
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -10,6 +10,7 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.config.Configuration.*
 
+// osmdroid github: https://github.com/osmdroid/osmdroid
 // Example: https://github.com/osmdroid/osmdroid/wiki/How-to-use-the-osmdroid-library-(Kotlin)
 
 class DronePosition : AppCompatActivity() {
