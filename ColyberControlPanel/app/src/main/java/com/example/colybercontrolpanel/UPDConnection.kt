@@ -15,6 +15,8 @@ object UDPConn {
     var connState = false
         private set
 
+    var newDataReceivedCallback: (() -> Unit)? = null
+
     /**
      * callback - function that receives connection result and is called when connecting is finished
      */
@@ -48,6 +50,7 @@ object UDPConn {
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
             connectingCallback(connectingResult)
+            Log.e(LogTag, "onPostExecute of UDPConnectAsyncTask. Result: $connectingResult")
 
             if (connectingResult) {
                 connState = true
@@ -69,10 +72,12 @@ object UDPConn {
                 e.printStackTrace()
             }
 
-            // TODO: handle received data
+            // TODO: handle received data (update global variables)
             Log.e(LogTag, "Received ${receiveDP.length} bytes!")
 
             // values to be updated are in Globals object
+
+            newDataReceivedCallback?.invoke()
         }
     }
 

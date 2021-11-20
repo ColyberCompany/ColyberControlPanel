@@ -1,7 +1,6 @@
 package com.example.colybercontrolpanel
 
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +23,8 @@ class SensorReadings : AppCompatActivity() {
         setContentView(R.layout.activity_sensor_readings)
 
         chart = findViewById<LineChart>(R.id.chart)
+
+        UDPConn.newDataReceivedCallback = this::updateReadingsCallback // set new data callback
 
 
         // TODO: remove this test values of chart
@@ -52,5 +53,10 @@ class SensorReadings : AppCompatActivity() {
 
         val intent = Intent(this, DronePosition::class.java)
         startActivity(intent)
+    }
+
+    fun updateReadingsCallback() {
+        // TODO: implement screen readings update
+
     }
 }
