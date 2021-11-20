@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.text.isDigitsOnly
 
 const val EXTRA_IPAddress = "com.example.colybercontrolpanel.IPAddress"
 const val EXTRA_IPPort = "com.example.colybercontrolpanel.IPPort"
@@ -22,11 +24,30 @@ class MainActivity : AppCompatActivity() {
         // TODO: check if ip address is valid
         val port = findViewById<EditText>(R.id.ipPortEditText).text.toString()
 
-        val intent = Intent(this, SensorReadings::class.java).apply {
-            putExtra(EXTRA_IPAddress, ipAddress)
-            putExtra(EXTRA_IPPort, port)
+        if (Globals.validateIPAddress(ipAddress))
+            Globals.DroneIPAddress = ipAddress
+        else {
+            Toast.makeText(this, "Invalid IP address", Toast.LENGTH_LONG).show()
+            return
         }
 
-        startActivity(intent)
+        if (port.isDigitsOnly())
+            Globals.DronePort = port.toInt()
+        else {
+            Toast.makeText(this, "Invalid port", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        UDPConn.connectAsync(this::connectingResultCallback)
+    }
+
+    private fun connectingResultCallback(connState: Boolean) {
+        if (connState) {
+            Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, SensorReadings::class.java)
+            startActivity(intent)
+        }
+        else
+            Toast.makeText(this, "Connecting failed", Toast.LENGTH_LONG).show()
     }
 }

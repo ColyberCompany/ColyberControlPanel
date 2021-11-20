@@ -12,6 +12,9 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 
+// Chart library: https://github.com/PhilJay/MPAndroidChart
+// Simple LineChart getting started: https://weeklycoding.com/mpandroidchart-documentation/getting-started/
+
 class SensorReadings : AppCompatActivity() {
 
     private lateinit var chart: LineChart
