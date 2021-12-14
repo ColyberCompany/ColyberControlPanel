@@ -21,8 +21,10 @@ import com.jjoe64.graphview.series.LineGraphSeries
 // Chart library: https://github.com/PhilJay/MPAndroidChart
 // Simple LineChart getting started: https://weeklycoding.com/mpandroidchart-documentation/getting-started/
 
-class SensorReadings : AppCompatActivity() {
+private const val UpdateValuesTimerInterval:Long = 100
 
+
+class SensorReadings : AppCompatActivity() {
     private val handler: Handler = Handler(Looper.getMainLooper())
 
     //private lateinit var chart: LineChart
@@ -73,54 +75,24 @@ class SensorReadings : AppCompatActivity() {
         angleYEditText = findViewById(R.id.editTextAngleY)
         angleZEditText = findViewById(R.id.editTextAngleZ)
 
-        Thread(updateReadings).start()
-
-/*
-        // TODO: remove this test values of chart
-        val entries = mutableListOf<Entry>()
-        for (i in 1..10)
-            entries.add(Entry(i.toFloat(), i.toFloat()))
-
-        val dataSet = LineDataSet(entries, "Label")
-        dataSet.apply {
-            //color = 0xFF0000
-            lineWidth = 1.5f
-            setDrawCircles(false)
-            setDrawValues(false)
-            setDrawCircleHole(false)
-
-            color = ColorTemplate.getHoloBlue()
-            valueTextColor = ColorTemplate.getHoloBlue()
-            fillAlpha = 65
-            fillColor = ColorTemplate.getHoloBlue()
-            highLightColor = Color.rgb(244, 117, 117)
-        }
-        dataSet.color = 0xFF0000
-
-        val lineData = LineData(dataSet)
-        lineData.apply {
-            setValueTextColor(Color.WHITE)
-            setValueTextSize(9f)
-        }
-        chart.data = lineData
-        chart.invalidate() // refresh*/
-
 
         val series = LineGraphSeries<DataPoint>()
-        for (i in 1..10)
-            series.appendData(DataPoint(i.toDouble(), i.toDouble()), false, 40)
-
         val series2 = LineGraphSeries<DataPoint>()
-        for (i in 1..10)
-            series2.appendData(DataPoint(i.toDouble(), (i + 10).toDouble()), false, 40)
 
         graph.addSeries(series)
         graph.addSeries(series2)
+
+
+        for (i in 1..5)
+            series.appendData(DataPoint(i.toDouble(), i.toDouble()), true, 40)
+
+        for (i in 1..10)
+            series2.appendData(DataPoint(i.toDouble(), (i + 10).toDouble()), true, 40)
     }
 
     override fun onResume() {
         super.onResume();
-        handler.postDelayed(updateReadings, 100)
+        handler.postDelayed(updateReadings, UpdateValuesTimerInterval)
     }
 
     override fun onPause() {
@@ -165,7 +137,7 @@ class SensorReadings : AppCompatActivity() {
             angleYEditText.setText(Globals.DroneData.angleY.toString())
             angleZEditText.setText(Globals.DroneData.angleZ.toString())
 
-            handler.postDelayed(this, 100)
+            handler.postDelayed(this, UpdateValuesTimerInterval)
         }
     }
 }
