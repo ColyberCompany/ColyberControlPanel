@@ -6,25 +6,25 @@ object Globals {
 
     object DroneData {
         // sensors
-        var accX = 0.0
-        var accY = 0.0
-        var accZ = 0.0
-        var gyroX = 0.0
-        var gyroY = 0.0
-        var gyroZ = 0.0
-        var magnX = 0.0
-        var magnY = 0.0
-        var magnZ = 0.0
-        var pressure = 0.0
-        var btmRangefinder = 0.0
+        var accX = 0.0f
+        var accY = 0.0f
+        var accZ = 0.0f
+        var gyroX = 0.0f
+        var gyroY = 0.0f
+        var gyroZ = 0.0f
+        var magnX = 0.0f
+        var magnY = 0.0f
+        var magnZ = 0.0f
+        var pressure = 0.0f
+        var btmRangefinder = 0.0f
 
         // calculated
-        var angleX = 0.0
-        var angleY = 0.0
-        var angleZ = 0.0
-        var latitude = 0.0
-        var longitude = 0.0
-        var altitude = 0.0
+        var angleX = 0.0f
+        var angleY = 0.0f
+        var angleZ = 0.0f
+        var latitude = 0.0f
+        var longitude = 0.0f
+        var altitude = 0.0f
     }
 
 

@@ -18,11 +18,49 @@ class SensorReadings : AppCompatActivity() {
 
     private lateinit var chart: LineChart
 
+    private lateinit var accXEditText: EditText
+    private lateinit var accYEditText: EditText
+    private lateinit var accZEditText: EditText
+    private lateinit var gyroXEditText: EditText
+    private lateinit var gyroYEditText: EditText
+    private lateinit var gyroZEditText: EditText
+    private lateinit var magnXEditText: EditText
+    private lateinit var magnYEditText: EditText
+    private lateinit var magnZEditText: EditText
+    private lateinit var pressureEditText: EditText
+    private lateinit var bottomRangefinderEditText: EditText
+    private lateinit var longitudeEditText: EditText
+    private lateinit var latitudeEditText: EditText
+    private lateinit var altitudeEditText: EditText
+    private lateinit var angleXEditText: EditText
+    private lateinit var angleYEditText: EditText
+    private lateinit var angleZEditText: EditText
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sensor_readings)
 
         chart = findViewById<LineChart>(R.id.chart)
+
+        accXEditText = findViewById(R.id.editTextAccX)
+        accYEditText = findViewById(R.id.editTextAccY)
+        accZEditText = findViewById(R.id.editTextAccZ)
+        gyroXEditText = findViewById(R.id.editTextGyroX)
+        gyroYEditText = findViewById(R.id.editTextGyroY)
+        gyroZEditText = findViewById(R.id.editTextGyroZ)
+        magnXEditText = findViewById(R.id.editTextMagnX)
+        magnYEditText = findViewById(R.id.editTextMagnY)
+        magnZEditText = findViewById(R.id.editTextMagnZ)
+        pressureEditText = findViewById(R.id.editTextPressure)
+        bottomRangefinderEditText = findViewById(R.id.editTextBtmRangefinder)
+        longitudeEditText = findViewById(R.id.editTextPosLong)
+        latitudeEditText = findViewById(R.id.editTextPosLat)
+        altitudeEditText = findViewById(R.id.editTextPosAlt)
+        angleXEditText = findViewById(R.id.editTextAngleX)
+        angleYEditText = findViewById(R.id.editTextAngleY)
+        angleZEditText = findViewById(R.id.editTextAngleZ)
 
         UDPConn.newDataReceivedCallback = this::updateReadingsCallback // set new data callback
 
@@ -58,5 +96,24 @@ class SensorReadings : AppCompatActivity() {
     fun updateReadingsCallback() {
         // TODO: implement screen readings update
 
+        accXEditText.setText(Globals.DroneData.accX.toString())
+        accYEditText.setText(Globals.DroneData.accY.toString())
+        accZEditText.setText(Globals.DroneData.accZ.toString())
+        gyroXEditText.setText(Globals.DroneData.gyroX.toString())
+        gyroYEditText.setText(Globals.DroneData.gyroY.toString())
+        gyroZEditText.setText(Globals.DroneData.gyroZ.toString())
+        magnXEditText.setText(Globals.DroneData.magnX.toString())
+        magnYEditText.setText(Globals.DroneData.magnY.toString())
+        magnZEditText.setText(Globals.DroneData.magnZ.toString())
+
+        pressureEditText.setText(Globals.DroneData.pressure.toString())
+        bottomRangefinderEditText.setText(Globals.DroneData.btmRangefinder.toString())
+        longitudeEditText.setText(Globals.DroneData.longitude.toString())
+        latitudeEditText.setText(Globals.DroneData.latitude.toString())
+        altitudeEditText.setText(Globals.DroneData.altitude.toString())
+
+        angleXEditText.setText(Globals.DroneData.angleX.toString())
+        angleYEditText.setText(Globals.DroneData.angleY.toString())
+        angleZEditText.setText(Globals.DroneData.angleZ.toString())
     }
 }

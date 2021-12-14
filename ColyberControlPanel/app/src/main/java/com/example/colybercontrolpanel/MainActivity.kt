@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 
@@ -41,8 +40,8 @@ class MainActivity : AppCompatActivity() {
         UDPConn.connectAsync(this::connectingResultCallback)
     }
 
-    private fun connectingResultCallback(connState: Boolean) {
-        if (connState) {
+    private fun connectingResultCallback(connectingResult: Boolean) {
+        if (connectingResult) {
             Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, SensorReadings::class.java)
             startActivity(intent)

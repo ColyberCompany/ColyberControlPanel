@@ -4,6 +4,7 @@ import android.os.AsyncTask
 import android.util.Log
 import java.io.IOException
 import java.net.*
+import java.nio.ByteBuffer
 
 private const val LogTag = "UDPConn"
 
@@ -18,12 +19,14 @@ object UDPConn {
     var newDataReceivedCallback: (() -> Unit)? = null
 
     /**
-     * callback - function that receives connection result and is called when connecting is finished
+     * callback - function that receives connecting result and is called when connecting is finished
      */
     fun connectAsync(callback: (Boolean) -> Unit)
     {
         if (!connState)
             UDPConnectAsyncTask(callback).execute()
+        else
+            callback(true)
     }
 
 
@@ -73,12 +76,46 @@ object UDPConn {
             }
 
             // TODO: handle received data (update global variables)
-            Log.e(LogTag, "Received ${receiveDP.length} bytes!")
+            //Log.e(LogTag, "Received ${receiveDP.length} bytes! <<<<<<<<<<<<<<<<<<")
+
+//            val bytes = byteArrayOf(receiveData[5], receiveData[4], receiveData[3], receiveData[2])
+//            val buffer = ByteBuffer.wrap(bytes)
+
+            //Log.e(LogTag, unpackFloatFromBuffer(receiveData, 2).toString())
+            Globals.DroneData.angleX = unpackFloatFromBuffer(receiveData, 2)
+            Globals.DroneData.angleY = unpackFloatFromBuffer(receiveData, 6)
+            Globals.DroneData.angleZ = unpackFloatFromBuffer(receiveData, 10)
+            Globals.DroneData.altitude = unpackFloatFromBuffer(receiveData, 14)
+            Globals.DroneData.latitude = unpackFloatFromBuffer(receiveData, 18)
+            Globals.DroneData.longitude = unpackFloatFromBuffer(receiveData, 22)
+            Globals.DroneData.accX = unpackFloatFromBuffer(receiveData, 26)
+            Globals.DroneData.accY = unpackFloatFromBuffer(receiveData, 30)
+            Globals.DroneData.accZ = unpackFloatFromBuffer(receiveData, 34)
+            Globals.DroneData.gyroX = unpackFloatFromBuffer(receiveData, 38)
+            Globals.DroneData.gyroY = unpackFloatFromBuffer(receiveData, 42)
+            Globals.DroneData.gyroZ = unpackFloatFromBuffer(receiveData, 46)
+            Globals.DroneData.magnX = unpackFloatFromBuffer(receiveData, 50)
+            Globals.DroneData.magnY = unpackFloatFromBuffer(receiveData, 54)
+            Globals.DroneData.magnZ = unpackFloatFromBuffer(receiveData, 58)
 
             // values to be updated are in Globals object
 
             newDataReceivedCallback?.invoke()
         }
+    }
+
+    private fun bytesToFloat(byte1: Byte, byte2: Byte, byte3: Byte, byte4: Byte): Float {
+        val bytes = byteArrayOf(byte1, byte2, byte3, byte4)
+        val buffer = ByteBuffer.wrap(bytes)
+        return buffer.float
+    }
+
+
+    private fun unpackFloatFromBuffer(buffer: ByteArray, floatFirstIndex: Int): Float {
+        return bytesToFloat(buffer[floatFirstIndex + 3],
+            buffer[floatFirstIndex + 2],
+            buffer[floatFirstIndex + 1],
+            buffer[floatFirstIndex])
     }
 
 }
