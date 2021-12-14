@@ -1,8 +1,11 @@
 package com.example.colybercontrolpanel
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -10,13 +13,20 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.utils.ColorTemplate
+import com.jjoe64.graphview.GraphView
+import com.jjoe64.graphview.series.DataPoint
+import com.jjoe64.graphview.series.LineGraphSeries
 
 // Chart library: https://github.com/PhilJay/MPAndroidChart
 // Simple LineChart getting started: https://weeklycoding.com/mpandroidchart-documentation/getting-started/
 
 class SensorReadings : AppCompatActivity() {
 
-    private lateinit var chart: LineChart
+    private val handler: Handler = Handler(Looper.getMainLooper())
+
+    //private lateinit var chart: LineChart
+    private lateinit var graph: GraphView
 
     private lateinit var accXEditText: EditText
     private lateinit var accYEditText: EditText
@@ -42,7 +52,8 @@ class SensorReadings : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sensor_readings)
 
-        chart = findViewById<LineChart>(R.id.chart)
+        //chart = findViewById<LineChart>(R.id.chart)
+        graph = findViewById(R.id.graph)
 
         accXEditText = findViewById(R.id.editTextAccX)
         accYEditText = findViewById(R.id.editTextAccY)
@@ -64,18 +75,57 @@ class SensorReadings : AppCompatActivity() {
 
         Thread(updateReadings).start()
 
-
+/*
         // TODO: remove this test values of chart
         val entries = mutableListOf<Entry>()
         for (i in 1..10)
             entries.add(Entry(i.toFloat(), i.toFloat()))
 
         val dataSet = LineDataSet(entries, "Label")
+        dataSet.apply {
+            //color = 0xFF0000
+            lineWidth = 1.5f
+            setDrawCircles(false)
+            setDrawValues(false)
+            setDrawCircleHole(false)
+
+            color = ColorTemplate.getHoloBlue()
+            valueTextColor = ColorTemplate.getHoloBlue()
+            fillAlpha = 65
+            fillColor = ColorTemplate.getHoloBlue()
+            highLightColor = Color.rgb(244, 117, 117)
+        }
         dataSet.color = 0xFF0000
 
         val lineData = LineData(dataSet)
+        lineData.apply {
+            setValueTextColor(Color.WHITE)
+            setValueTextSize(9f)
+        }
         chart.data = lineData
-        chart.invalidate() // refresh
+        chart.invalidate() // refresh*/
+
+
+        val series = LineGraphSeries<DataPoint>()
+        for (i in 1..10)
+            series.appendData(DataPoint(i.toDouble(), i.toDouble()), false, 40)
+
+        val series2 = LineGraphSeries<DataPoint>()
+        for (i in 1..10)
+            series2.appendData(DataPoint(i.toDouble(), (i + 10).toDouble()), false, 40)
+
+        graph.addSeries(series)
+        graph.addSeries(series2)
+    }
+
+    override fun onResume() {
+        super.onResume();
+        handler.postDelayed(updateReadings, 100)
+    }
+
+    override fun onPause() {
+        handler.removeCallbacks(updateReadings)
+        super.onPause()
     }
 
     // TODO: remove this onClick
@@ -93,8 +143,8 @@ class SensorReadings : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private val updateReadings = Runnable {
-        while (true) {
+    private val updateReadings = object : Runnable {
+        override fun run() {
             accXEditText.setText(Globals.DroneData.accX.toString())
             accYEditText.setText(Globals.DroneData.accY.toString())
             accZEditText.setText(Globals.DroneData.accZ.toString())
@@ -115,7 +165,7 @@ class SensorReadings : AppCompatActivity() {
             angleYEditText.setText(Globals.DroneData.angleY.toString())
             angleZEditText.setText(Globals.DroneData.angleZ.toString())
 
-            Thread.sleep(100)
+            handler.postDelayed(this, 100)
         }
     }
 }
