@@ -12,6 +12,7 @@ object UDPConn {
     private val datagramSocket = DatagramSocket(null)
     private lateinit var droneIpAddress: InetAddress
     private const val MaxBufferLen = 100
+    private const val DroneDataPacketID: Byte = 69
 
     var connState = false
         private set
@@ -75,32 +76,26 @@ object UDPConn {
                 e.printStackTrace()
             }
 
-            // TODO: handle received data (update global variables)
-            //Log.e(LogTag, "Received ${receiveDP.length} bytes! <<<<<<<<<<<<<<<<<<")
+            if (receiveDP.length == 62 && receiveData[0] == DroneDataPacketID) {
+                Globals.DroneData.angleX = unpackFloatFromBuffer(receiveData, 2)
+                Globals.DroneData.angleY = unpackFloatFromBuffer(receiveData, 6)
+                Globals.DroneData.angleZ = unpackFloatFromBuffer(receiveData, 10)
+                Globals.DroneData.altitude = unpackFloatFromBuffer(receiveData, 14)
+                Globals.DroneData.latitude = unpackFloatFromBuffer(receiveData, 18)
+                Globals.DroneData.longitude = unpackFloatFromBuffer(receiveData, 22)
+                Globals.DroneData.accX = unpackFloatFromBuffer(receiveData, 26)
+                Globals.DroneData.accY = unpackFloatFromBuffer(receiveData, 30)
+                Globals.DroneData.accZ = unpackFloatFromBuffer(receiveData, 34)
+                Globals.DroneData.gyroX = unpackFloatFromBuffer(receiveData, 38)
+                Globals.DroneData.gyroY = unpackFloatFromBuffer(receiveData, 42)
+                Globals.DroneData.gyroZ = unpackFloatFromBuffer(receiveData, 46)
+                Globals.DroneData.magnX = unpackFloatFromBuffer(receiveData, 50)
+                Globals.DroneData.magnY = unpackFloatFromBuffer(receiveData, 54)
+                Globals.DroneData.magnZ = unpackFloatFromBuffer(receiveData, 58)
 
-//            val bytes = byteArrayOf(receiveData[5], receiveData[4], receiveData[3], receiveData[2])
-//            val buffer = ByteBuffer.wrap(bytes)
-
-            //Log.e(LogTag, unpackFloatFromBuffer(receiveData, 2).toString())
-            Globals.DroneData.angleX = unpackFloatFromBuffer(receiveData, 2)
-            Globals.DroneData.angleY = unpackFloatFromBuffer(receiveData, 6)
-            Globals.DroneData.angleZ = unpackFloatFromBuffer(receiveData, 10)
-            Globals.DroneData.altitude = unpackFloatFromBuffer(receiveData, 14)
-            Globals.DroneData.latitude = unpackFloatFromBuffer(receiveData, 18)
-            Globals.DroneData.longitude = unpackFloatFromBuffer(receiveData, 22)
-            Globals.DroneData.accX = unpackFloatFromBuffer(receiveData, 26)
-            Globals.DroneData.accY = unpackFloatFromBuffer(receiveData, 30)
-            Globals.DroneData.accZ = unpackFloatFromBuffer(receiveData, 34)
-            Globals.DroneData.gyroX = unpackFloatFromBuffer(receiveData, 38)
-            Globals.DroneData.gyroY = unpackFloatFromBuffer(receiveData, 42)
-            Globals.DroneData.gyroZ = unpackFloatFromBuffer(receiveData, 46)
-            Globals.DroneData.magnX = unpackFloatFromBuffer(receiveData, 50)
-            Globals.DroneData.magnY = unpackFloatFromBuffer(receiveData, 54)
-            Globals.DroneData.magnZ = unpackFloatFromBuffer(receiveData, 58)
-
-            // values to be updated are in Globals object
-
-            newDataReceivedCallback?.invoke()
+                // trigger callback
+                newDataReceivedCallback?.invoke()
+            }
         }
     }
 

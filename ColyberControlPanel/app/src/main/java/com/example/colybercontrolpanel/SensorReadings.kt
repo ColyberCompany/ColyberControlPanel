@@ -62,7 +62,7 @@ class SensorReadings : AppCompatActivity() {
         angleYEditText = findViewById(R.id.editTextAngleY)
         angleZEditText = findViewById(R.id.editTextAngleZ)
 
-        UDPConn.newDataReceivedCallback = this::updateReadingsCallback // set new data callback
+        Thread(updateReadings).start()
 
 
         // TODO: remove this test values of chart
@@ -93,27 +93,29 @@ class SensorReadings : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun updateReadingsCallback() {
-        // TODO: implement screen readings update
+    private val updateReadings = Runnable {
+        while (true) {
+            accXEditText.setText(Globals.DroneData.accX.toString())
+            accYEditText.setText(Globals.DroneData.accY.toString())
+            accZEditText.setText(Globals.DroneData.accZ.toString())
+            gyroXEditText.setText(Globals.DroneData.gyroX.toString())
+            gyroYEditText.setText(Globals.DroneData.gyroY.toString())
+            gyroZEditText.setText(Globals.DroneData.gyroZ.toString())
+            magnXEditText.setText(Globals.DroneData.magnX.toString())
+            magnYEditText.setText(Globals.DroneData.magnY.toString())
+            magnZEditText.setText(Globals.DroneData.magnZ.toString())
 
-        accXEditText.setText(Globals.DroneData.accX.toString())
-        accYEditText.setText(Globals.DroneData.accY.toString())
-        accZEditText.setText(Globals.DroneData.accZ.toString())
-        gyroXEditText.setText(Globals.DroneData.gyroX.toString())
-        gyroYEditText.setText(Globals.DroneData.gyroY.toString())
-        gyroZEditText.setText(Globals.DroneData.gyroZ.toString())
-        magnXEditText.setText(Globals.DroneData.magnX.toString())
-        magnYEditText.setText(Globals.DroneData.magnY.toString())
-        magnZEditText.setText(Globals.DroneData.magnZ.toString())
+            pressureEditText.setText(Globals.DroneData.pressure.toString())
+            bottomRangefinderEditText.setText(Globals.DroneData.btmRangefinder.toString())
+            longitudeEditText.setText(Globals.DroneData.longitude.toString())
+            latitudeEditText.setText(Globals.DroneData.latitude.toString())
+            altitudeEditText.setText(Globals.DroneData.altitude.toString())
 
-        pressureEditText.setText(Globals.DroneData.pressure.toString())
-        bottomRangefinderEditText.setText(Globals.DroneData.btmRangefinder.toString())
-        longitudeEditText.setText(Globals.DroneData.longitude.toString())
-        latitudeEditText.setText(Globals.DroneData.latitude.toString())
-        altitudeEditText.setText(Globals.DroneData.altitude.toString())
+            angleXEditText.setText(Globals.DroneData.angleX.toString())
+            angleYEditText.setText(Globals.DroneData.angleY.toString())
+            angleZEditText.setText(Globals.DroneData.angleZ.toString())
 
-        angleXEditText.setText(Globals.DroneData.angleX.toString())
-        angleYEditText.setText(Globals.DroneData.angleY.toString())
-        angleZEditText.setText(Globals.DroneData.angleZ.toString())
+            Thread.sleep(100)
+        }
     }
 }
