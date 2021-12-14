@@ -9,11 +9,6 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.EditText
-import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.utils.ColorTemplate
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
@@ -21,14 +16,20 @@ import com.jjoe64.graphview.series.LineGraphSeries
 // Chart library: https://github.com/PhilJay/MPAndroidChart
 // Simple LineChart getting started: https://weeklycoding.com/mpandroidchart-documentation/getting-started/
 
-private const val UpdateValuesTimerInterval:Long = 100
+// Finally used graph library: https://github.com/jjoe64/GraphView
+
+private const val UpdateValuesTimerInterval: Long = 50
+private const val MaxDataPoints: Int = 50
 
 
 class SensorReadings : AppCompatActivity() {
     private val handler: Handler = Handler(Looper.getMainLooper())
 
-    //private lateinit var chart: LineChart
     private lateinit var graph: GraphView
+    private val series1 = LineGraphSeries<DataPoint>()
+    private val series2 = LineGraphSeries<DataPoint>()
+    private val series3 = LineGraphSeries<DataPoint>()
+    private var lastXValue = 0.0
 
     private lateinit var accXEditText: EditText
     private lateinit var accYEditText: EditText
@@ -54,9 +55,6 @@ class SensorReadings : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sensor_readings)
 
-        //chart = findViewById<LineChart>(R.id.chart)
-        graph = findViewById(R.id.graph)
-
         accXEditText = findViewById(R.id.editTextAccX)
         accYEditText = findViewById(R.id.editTextAccY)
         accZEditText = findViewById(R.id.editTextAccZ)
@@ -75,19 +73,18 @@ class SensorReadings : AppCompatActivity() {
         angleYEditText = findViewById(R.id.editTextAngleY)
         angleZEditText = findViewById(R.id.editTextAngleZ)
 
+        graph = findViewById(R.id.graph)
 
-        val series = LineGraphSeries<DataPoint>()
-        val series2 = LineGraphSeries<DataPoint>()
-
-        graph.addSeries(series)
+        graph.addSeries(series1)
         graph.addSeries(series2)
+        graph.addSeries(series3)
+        graph.viewport.apply {
+            isXAxisBoundsManual = true
+            setMinX(0.0)
+            setMaxX(MaxDataPoints.toDouble())
+        }
 
-
-        for (i in 1..5)
-            series.appendData(DataPoint(i.toDouble(), i.toDouble()), true, 40)
-
-        for (i in 1..10)
-            series2.appendData(DataPoint(i.toDouble(), (i + 10).toDouble()), true, 40)
+        series2.color = Color.GREEN
     }
 
     override fun onResume() {
@@ -136,6 +133,11 @@ class SensorReadings : AppCompatActivity() {
             angleXEditText.setText(Globals.DroneData.angleX.toString())
             angleYEditText.setText(Globals.DroneData.angleY.toString())
             angleZEditText.setText(Globals.DroneData.angleZ.toString())
+
+
+            series1.appendData(DataPoint(lastXValue, Globals.DroneData.angleX.toDouble()), true, MaxDataPoints)
+            series2.appendData(DataPoint(lastXValue, Globals.DroneData.angleY.toDouble()), false, MaxDataPoints)
+            lastXValue += 1.0
 
             handler.postDelayed(this, UpdateValuesTimerInterval)
         }
