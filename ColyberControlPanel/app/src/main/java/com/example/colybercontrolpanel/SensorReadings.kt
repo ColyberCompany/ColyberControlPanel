@@ -9,6 +9,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
@@ -49,6 +50,10 @@ class SensorReadings : AppCompatActivity() {
     private lateinit var angleYEditText: EditText
     private lateinit var angleZEditText: EditText
 
+    private var fullscreenChartFlag = false
+
+    private var plotType: PlotType = PlotType.AngleXY // TODO: add setting plot type
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,11 +89,15 @@ class SensorReadings : AppCompatActivity() {
             setMaxX(MaxDataPoints.toDouble())
         }
 
+        series1.color = Color.RED
         series2.color = Color.GREEN
+        series3.color = Color.BLUE
+
+        graph.setBackgroundColor(Color.WHITE)
     }
 
     override fun onResume() {
-        super.onResume();
+        super.onResume()
         handler.postDelayed(updateReadings, UpdateValuesTimerInterval)
     }
 
@@ -110,6 +119,43 @@ class SensorReadings : AppCompatActivity() {
 
         val intent = Intent(this, DronePosition::class.java)
         startActivity(intent)
+    }
+
+    fun chartOnClick(view: View) {
+        val params = graph.layoutParams as ConstraintLayout.LayoutParams
+
+        if (fullscreenChartFlag) {
+            params.topToTop = ConstraintLayout.LayoutParams.UNSET
+            params.topToBottom = angleYEditText.id
+
+            //requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        }
+        else {
+            //params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
+            //params.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+            //params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+            params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
+
+            //requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        }
+
+        fullscreenChartFlag = !fullscreenChartFlag
+        graph.requestLayout()
+    }
+
+    fun selectChartDataOnClick(view: View) {
+        plotType = when (view.id) {
+            R.id.editTextAngleX, R.id.editTextAngleY -> PlotType.AngleXY
+            R.id.editTextAngleZ -> PlotType.AngleZ
+            R.id.editTextPosLong, R.id.editTextPosLat -> PlotType.PositionXY
+            R.id.editTextPosAlt -> PlotType.PositionZ
+            R.id.editTextAccX, R.id.editTextAccY, R.id.editTextAccZ -> PlotType.AccXYZ
+            R.id.editTextGyroX, R.id.editTextGyroY, R.id.editTextGyroZ -> PlotType.GyroXYZ
+            R.id.editTextMagnX, R.id.editTextMagnY, R.id.editTextMagnZ -> PlotType.MagnXYZ
+            R.id.editTextPressure -> PlotType.Pressure
+            R.id.editTextBtmRangefinder -> PlotType.BtmRangefinder
+            else -> PlotType.AngleXY
+        }
     }
 
     private val updateReadings = object : Runnable {
@@ -135,11 +181,74 @@ class SensorReadings : AppCompatActivity() {
             angleZEditText.setText(Globals.DroneData.angleZ.toString())
 
 
-            series1.appendData(DataPoint(lastXValue, Globals.DroneData.angleX.toDouble()), true, MaxDataPoints)
-            series2.appendData(DataPoint(lastXValue, Globals.DroneData.angleY.toDouble()), false, MaxDataPoints)
-            lastXValue += 1.0
+            var ser1Data = Float.NaN
+            var ser2Data = Float.NaN
+            var ser3Data = Float.NaN
+
+            // set values of proper data to plot
+            when (plotType) {
+                PlotType.AngleXY -> {
+                    ser1Data = Globals.DroneData.angleX
+                    ser2Data = Globals.DroneData.angleY
+                }
+                PlotType.AngleZ ->
+                    ser1Data = Globals.DroneData.angleZ
+                PlotType.PositionXY -> {
+                    ser1Data = Globals.DroneData.latitude
+                    ser2Data = Globals.DroneData.longitude
+                }
+                PlotType.PositionZ ->
+                    ser1Data = Globals.DroneData.altitude
+                PlotType.AccXYZ -> {
+                    ser1Data = Globals.DroneData.accX
+                    ser2Data = Globals.DroneData.accY
+                    ser3Data = Globals.DroneData.accZ
+                }
+                PlotType.GyroXYZ -> {
+                    ser1Data = Globals.DroneData.gyroX
+                    ser2Data = Globals.DroneData.gyroY
+                    ser3Data = Globals.DroneData.gyroZ
+                }
+                PlotType.MagnXYZ -> {
+                    ser1Data = Globals.DroneData.magnX
+                    ser2Data = Globals.DroneData.magnY
+                    ser3Data = Globals.DroneData.magnZ
+                }
+                PlotType.Pressure ->
+                    ser1Data = Globals.DroneData.pressure
+                PlotType.BtmRangefinder ->
+                    ser1Data = Globals.DroneData.btmRangefinder
+            }
+
+            // add data to data series (plot data)
+            if (!ser1Data.isNaN())
+                series1.appendData(DataPoint(lastXValue, ser1Data.toDouble()), true, MaxDataPoints)
+            else
+                series1.resetData(emptyArray())
+            if (!ser2Data.isNaN())
+                series2.appendData(DataPoint(lastXValue, ser2Data.toDouble()), true, MaxDataPoints)
+            else
+                series2.resetData(emptyArray())
+            if (!ser3Data.isNaN())
+                series3.appendData(DataPoint(lastXValue, ser3Data.toDouble()), true, MaxDataPoints)
+            else
+                series3.resetData(emptyArray())
+
+            lastXValue += 1.0 // move chart to the next sample
 
             handler.postDelayed(this, UpdateValuesTimerInterval)
         }
+    }
+
+    enum class PlotType {
+        AngleXY,
+        AngleZ,
+        PositionXY,
+        PositionZ,
+        AccXYZ,
+        GyroXYZ,
+        MagnXYZ,
+        Pressure,
+        BtmRangefinder
     }
 }
