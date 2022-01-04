@@ -76,7 +76,7 @@ object UDPConn {
                 e.printStackTrace()
             }
 
-            if (receiveDP.length == 62 && receiveData[0] == DroneDataPacketID) {
+            if (receiveDP.length == 62 && receiveData[0] == DroneDataPacketID) { // TODO: ID is on first two bytes, not only on index 0
                 Globals.DroneData.angleX = unpackFloatFromBuffer(receiveData, 2)
                 Globals.DroneData.angleY = unpackFloatFromBuffer(receiveData, 6)
                 Globals.DroneData.angleZ = unpackFloatFromBuffer(receiveData, 10)
