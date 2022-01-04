@@ -160,84 +160,91 @@ class SensorReadings : AppCompatActivity() {
 
     private val updateReadings = object : Runnable {
         override fun run() {
-            accXEditText.setText(Globals.DroneData.accX.toString())
-            accYEditText.setText(Globals.DroneData.accY.toString())
-            accZEditText.setText(Globals.DroneData.accZ.toString())
-            gyroXEditText.setText(Globals.DroneData.gyroX.toString())
-            gyroYEditText.setText(Globals.DroneData.gyroY.toString())
-            gyroZEditText.setText(Globals.DroneData.gyroZ.toString())
-            magnXEditText.setText(Globals.DroneData.magnX.toString())
-            magnYEditText.setText(Globals.DroneData.magnY.toString())
-            magnZEditText.setText(Globals.DroneData.magnZ.toString())
-
-            pressureEditText.setText(Globals.DroneData.pressure.toString())
-            bottomRangefinderEditText.setText(Globals.DroneData.btmRangefinder.toString())
-            longitudeEditText.setText(Globals.DroneData.longitude.toString())
-            latitudeEditText.setText(Globals.DroneData.latitude.toString())
-            altitudeEditText.setText(Globals.DroneData.altitude.toString())
-
-            angleXEditText.setText(Globals.DroneData.angleX.toString())
-            angleYEditText.setText(Globals.DroneData.angleY.toString())
-            angleZEditText.setText(Globals.DroneData.angleZ.toString())
-
-
-            var ser1Data = Float.NaN
-            var ser2Data = Float.NaN
-            var ser3Data = Float.NaN
-
-            // set values of proper data to plot
-            when (plotType) {
-                PlotType.AngleXY -> {
-                    ser1Data = Globals.DroneData.angleX
-                    ser2Data = Globals.DroneData.angleY
-                }
-                PlotType.AngleZ ->
-                    ser1Data = Globals.DroneData.angleZ
-                PlotType.PositionXY -> {
-                    ser1Data = Globals.DroneData.latitude
-                    ser2Data = Globals.DroneData.longitude
-                }
-                PlotType.PositionZ ->
-                    ser1Data = Globals.DroneData.altitude
-                PlotType.AccXYZ -> {
-                    ser1Data = Globals.DroneData.accX
-                    ser2Data = Globals.DroneData.accY
-                    ser3Data = Globals.DroneData.accZ
-                }
-                PlotType.GyroXYZ -> {
-                    ser1Data = Globals.DroneData.gyroX
-                    ser2Data = Globals.DroneData.gyroY
-                    ser3Data = Globals.DroneData.gyroZ
-                }
-                PlotType.MagnXYZ -> {
-                    ser1Data = Globals.DroneData.magnX
-                    ser2Data = Globals.DroneData.magnY
-                    ser3Data = Globals.DroneData.magnZ
-                }
-                PlotType.Pressure ->
-                    ser1Data = Globals.DroneData.pressure
-                PlotType.BtmRangefinder ->
-                    ser1Data = Globals.DroneData.btmRangefinder
-            }
-
-            // add data to data series (plot data)
-            if (!ser1Data.isNaN())
-                series1.appendData(DataPoint(lastXValue, ser1Data.toDouble()), true, MaxDataPoints)
-            else
-                series1.resetData(emptyArray())
-            if (!ser2Data.isNaN())
-                series2.appendData(DataPoint(lastXValue, ser2Data.toDouble()), true, MaxDataPoints)
-            else
-                series2.resetData(emptyArray())
-            if (!ser3Data.isNaN())
-                series3.appendData(DataPoint(lastXValue, ser3Data.toDouble()), true, MaxDataPoints)
-            else
-                series3.resetData(emptyArray())
-
-            lastXValue += 1.0 // move chart to the next sample
+            updateRealTimeValues()
+            updateDynamicChart()
 
             handler.postDelayed(this, UpdateValuesTimerInterval)
         }
+    }
+
+    private fun updateRealTimeValues() {
+        accXEditText.setText(Globals.DroneData.accX.toString())
+        accYEditText.setText(Globals.DroneData.accY.toString())
+        accZEditText.setText(Globals.DroneData.accZ.toString())
+        gyroXEditText.setText(Globals.DroneData.gyroX.toString())
+        gyroYEditText.setText(Globals.DroneData.gyroY.toString())
+        gyroZEditText.setText(Globals.DroneData.gyroZ.toString())
+        magnXEditText.setText(Globals.DroneData.magnX.toString())
+        magnYEditText.setText(Globals.DroneData.magnY.toString())
+        magnZEditText.setText(Globals.DroneData.magnZ.toString())
+
+        pressureEditText.setText(Globals.DroneData.pressure.toString())
+        bottomRangefinderEditText.setText(Globals.DroneData.btmRangefinder.toString())
+        longitudeEditText.setText(Globals.DroneData.longitude.toString())
+        latitudeEditText.setText(Globals.DroneData.latitude.toString())
+        altitudeEditText.setText(Globals.DroneData.altitude.toString())
+
+        angleXEditText.setText(Globals.DroneData.angleX.toString())
+        angleYEditText.setText(Globals.DroneData.angleY.toString())
+        angleZEditText.setText(Globals.DroneData.angleZ.toString())
+    }
+
+    private fun updateDynamicChart() {
+        var ser1Data = Float.NaN
+        var ser2Data = Float.NaN
+        var ser3Data = Float.NaN
+
+        // set values of proper data to plot
+        when (plotType) {
+            PlotType.AngleXY -> {
+                ser1Data = Globals.DroneData.angleX
+                ser2Data = Globals.DroneData.angleY
+            }
+            PlotType.AngleZ ->
+                ser1Data = Globals.DroneData.angleZ
+            PlotType.PositionXY -> {
+                ser1Data = Globals.DroneData.latitude
+                ser2Data = Globals.DroneData.longitude
+            }
+            PlotType.PositionZ ->
+                ser1Data = Globals.DroneData.altitude
+            PlotType.AccXYZ -> {
+                ser1Data = Globals.DroneData.accX
+                ser2Data = Globals.DroneData.accY
+                ser3Data = Globals.DroneData.accZ
+            }
+            PlotType.GyroXYZ -> {
+                ser1Data = Globals.DroneData.gyroX
+                ser2Data = Globals.DroneData.gyroY
+                ser3Data = Globals.DroneData.gyroZ
+            }
+            PlotType.MagnXYZ -> {
+                ser1Data = Globals.DroneData.magnX
+                ser2Data = Globals.DroneData.magnY
+                ser3Data = Globals.DroneData.magnZ
+            }
+            PlotType.Pressure ->
+                ser1Data = Globals.DroneData.pressure
+            PlotType.BtmRangefinder ->
+                ser1Data = Globals.DroneData.btmRangefinder
+        }
+
+        // add data to data series (plot data)
+        if (!ser1Data.isNaN())
+            series1.appendData(DataPoint(lastXValue, ser1Data.toDouble()), true, MaxDataPoints)
+        else
+            series1.resetData(emptyArray())
+        if (!ser2Data.isNaN())
+            series2.appendData(DataPoint(lastXValue, ser2Data.toDouble()), true, MaxDataPoints)
+        else
+            series2.resetData(emptyArray())
+        if (!ser3Data.isNaN())
+            series3.appendData(DataPoint(lastXValue, ser3Data.toDouble()), true, MaxDataPoints)
+        else
+            series3.resetData(emptyArray())
+
+        lastXValue += 1.0 // move chart to the next sample
+        lastXValue += 1.0 // move chart to the next sample
     }
 
     enum class PlotType {
