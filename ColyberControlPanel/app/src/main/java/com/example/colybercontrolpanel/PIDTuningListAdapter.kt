@@ -1,6 +1,11 @@
 package com.example.colybercontrolpanel
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +14,12 @@ import android.widget.*
 class PIDTuningListAdapter(context: Context, resource: Int, textViewResourceId: Int, objects: Array<String>) : ArrayAdapter<String>(context, resource, textViewResourceId, objects) {
     private val layout: Int = resource
 
+    @SuppressLint("ViewHolder") // TODO: suppressed [...].inflate(layout, parent, false). Fix this
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         super.getView(position, convertView, parent)
+
+        if (convertView != null)
+            return convertView
 
         val convertView = LayoutInflater.from(context).inflate(layout, parent, false)
 
@@ -36,11 +45,62 @@ class PIDTuningListAdapter(context: Context, resource: Int, textViewResourceId: 
     }
 
     private fun setOnClicks(viewHolder: PIDViewHolder) {
+        // Value EditText
+        viewHolder.valueEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                Log.e("asdf", "value + ${viewHolder.valueEditText.text}")
+            }
+
+        })
+
         // Set 0 CheckBox
-        viewHolder.setZeroCheckBox.setOnClickListener(View.OnClickListener {
+        viewHolder.setZeroCheckBox.setOnClickListener {
             val isNotChecked = !viewHolder.setZeroCheckBox.isChecked
             viewHolder.nameTextView.isEnabled = isNotChecked
+            viewHolder.valueEditText.isEnabled = isNotChecked
+            viewHolder.increaseButton.isEnabled = isNotChecked
+            viewHolder.decreaseButton.isEnabled = isNotChecked
+            viewHolder.valueSeekBar.isEnabled = isNotChecked
+            viewHolder.minValueEditText.isEnabled = isNotChecked
+            viewHolder.maxValueEditText.isEnabled = isNotChecked
+        }
+
+        // Increase Button
+        viewHolder.increaseButton.setOnClickListener {
+            viewHolder.valueSeekBar.progress += 1
+        }
+
+        // Decrease Button
+        viewHolder.decreaseButton.setOnClickListener {
+            viewHolder.valueSeekBar.progress -= 1
+        }
+
+        // Value SeekBar
+        viewHolder.valueSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
+                val min = viewHolder.minValueEditText.text.toString().toFloat()
+                val max = viewHolder.maxValueEditText.text.toString().toFloat()
+                viewHolder.valueEditText.setText(seekBarToValue(viewHolder.valueSeekBar, min, max).toString())
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(p0: SeekBar?) {
+            }
+
         })
+
+        // Min value EditText
+
+        // Max value EditText
+
     }
 
 
@@ -54,4 +114,11 @@ class PIDTuningListAdapter(context: Context, resource: Int, textViewResourceId: 
         val minValueEditText: EditText,
         val maxValueEditText: EditText
     )
+
+    fun seekBarToValue(seekBar: SeekBar, min: Float, max: Float): Float {
+        val seekBarMax = seekBar.max
+        val seekBarPercent: Float = seekBar.progress.toFloat() / seekBarMax
+        val dist = max - min
+        return (seekBarPercent * dist) + min
+    }
 }

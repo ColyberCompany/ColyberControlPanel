@@ -6,8 +6,8 @@ import android.util.Log
 import android.widget.ListView
 
 class PIDTuningActivity : AppCompatActivity() {
-    val pidControllersList = arrayOf("Leveling", "Heading", "AltHold")
-    val pidControllersComponents = arrayOf("P", "I", "D")
+    private val pidControllersList = arrayOf("Leveling", "Heading", "AltHold")
+    private val pidControllersComponents = arrayOf("P", "I", "D")
 
 
 
