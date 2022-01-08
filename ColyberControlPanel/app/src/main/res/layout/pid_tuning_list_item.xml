@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/pidPartName"
+        android:layout_width="13dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="P"
+        app:layout_constraintBottom_toBottomOf="@+id/pidValueEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pidValueEditText" />
+
+    <EditText
+        android:id="@+id/pidValueEditText"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toEndOf="@+id/pidPartName"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Button
+        android:id="@+id/pidDecreaseButton"
+        android:layout_width="39dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:text="-"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pidValueEditText" />
+
+    <Button
+        android:id="@+id/pidIncreaseButton"
+        android:layout_width="39dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:text="+"
+        app:layout_constraintBottom_toBottomOf="@+id/pidDecreaseButton"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <SeekBar
+        android:id="@+id/pidValueSeekBar"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:max="10"
+        android:progress="3"
+        app:layout_constraintBottom_toBottomOf="@+id/pidDecreaseButton"
+        app:layout_constraintEnd_toStartOf="@+id/pidIncreaseButton"
+        app:layout_constraintStart_toEndOf="@+id/pidDecreaseButton"
+        app:layout_constraintTop_toTopOf="@+id/pidDecreaseButton" />
+
+    <CheckBox
+        android:id="@+id/pidSet0CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Set 0"
+        app:layout_constraintBottom_toBottomOf="@+id/pidValueEditText"
+        app:layout_constraintStart_toEndOf="@+id/pidValueEditText"
+        app:layout_constraintTop_toTopOf="@+id/pidValueEditText" />
+
+    <EditText
+        android:id="@+id/editTextNumberDecimal2"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="@+id/pidSet0CheckBox"
+        app:layout_constraintStart_toEndOf="@+id/pidSet0CheckBox"
+        app:layout_constraintTop_toTopOf="@+id/pidSet0CheckBox" />
+
+    <EditText
+        android:id="@+id/editTextNumberDecimal3"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextNumberDecimal2"
+        app:layout_constraintStart_toEndOf="@+id/editTextNumberDecimal2"
+        app:layout_constraintTop_toTopOf="@+id/editTextNumberDecimal2" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Max:"
+        android:textSize="8sp"
+        app:layout_constraintStart_toStartOf="@+id/editTextNumberDecimal3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pidMinValueEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Min:"
+        android:textSize="8sp"
+        app:layout_constraintStart_toStartOf="@+id/editTextNumberDecimal2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pidMaxValueEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Value:"
+        android:textSize="8sp"
+        app:layout_constraintStart_toStartOf="@+id/pidValueEditText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -39,7 +39,7 @@
         android:ems="10"
         android:focusable="false"
         android:inputType="numberDecimal"
-        android:onClick="selectChartDataOnClick"
+        android:onClick="testOnClick"
         android:text="-1.234"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"

@@ -52,7 +52,7 @@ class SensorReadings : AppCompatActivity() {
 
     private var fullscreenChartFlag = false
 
-    private var plotType: PlotType = PlotType.AngleXY // TODO: add setting plot type
+    private var plotType: PlotType = PlotType.AngleXY
 
 
 
