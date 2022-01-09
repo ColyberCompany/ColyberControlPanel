@@ -118,6 +118,7 @@ class SensorReadings : AppCompatActivity() {
         Log.e("as", edittext.text.toString())
 
         val intent = Intent(this, DronePosition::class.java)
+        //val intent = Intent(this, PIDTuningActivity::class.java)
         startActivity(intent)
     }
 
