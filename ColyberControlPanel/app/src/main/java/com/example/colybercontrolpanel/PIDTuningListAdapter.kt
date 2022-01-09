@@ -2,9 +2,6 @@ package com.example.colybercontrolpanel
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +42,8 @@ class PIDTuningListAdapter(context: Context, resource: Int, textViewResourceId: 
     }
 
     private fun setUpOnClicks(viewHolder: PIDViewHolder) {
+        // Some helper functions
+
         fun getMin(): Float {
             return viewHolder.minValueEditText.text.toString().toFloat()
         }
@@ -53,9 +52,26 @@ class PIDTuningListAdapter(context: Context, resource: Int, textViewResourceId: 
             return viewHolder.maxValueEditText.text.toString().toFloat()
         }
 
-        fun getValue(): Float {
+        fun getEditTextValue(): Float {
             return viewHolder.valueEditText.text.toString().toFloat()
         }
+
+        fun getSeekBarValue(): Float {
+            val seekBarPercent: Float = viewHolder.valueSeekBar.progress.toFloat() / viewHolder.valueSeekBar.max
+            val dist = getMax() - getMin()
+            return (seekBarPercent * dist) + getMin()
+        }
+
+        fun updateSeekBarFromEditTexts() {
+            val newValue = valueToPercent(getEditTextValue(), getMin(), getMax()) * viewHolder.valueSeekBar.max
+            viewHolder.valueSeekBar.progress = round(newValue).toInt()
+        }
+
+        fun updateValueEditTextFromSeekBar() {
+            val newValue = getSeekBarValue()
+            viewHolder.valueEditText.setText((round(newValue * 100) / 100).toString())
+        }
+
 
         // Set 0 CheckBox
         viewHolder.setZeroCheckBox.setOnClickListener {
@@ -85,22 +101,28 @@ class PIDTuningListAdapter(context: Context, resource: Int, textViewResourceId: 
             override fun onStopTrackingTouch(p0: SeekBar?) {}
 
             override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
-                // the only place where valueEditText is updated. Seek bar stores the actual value
-                val newValue = seekBarToValue(viewHolder.valueSeekBar, getMin(), getMax())
-                viewHolder.valueEditText.setText((round(newValue * 100) / 100).toString())
+                updateValueEditTextFromSeekBar()
             }
         })
 
         // Min value EditText
         viewHolder.minValueEditText.onFocusChangeListener =
             View.OnFocusChangeListener { _, _ ->
-                viewHolder.valueSeekBar.progress = round(valueToPercent(getValue(), getMin(), getMax()) * viewHolder.valueSeekBar.max).toInt()
+                val newMin = viewHolder.minValueEditText.text.toString().toFloat()
+                val max = viewHolder.maxValueEditText.text.toString().toFloat()
+                if (newMin >= max)
+                    viewHolder.minValueEditText.setText((max - 1).toString())
+                updateSeekBarFromEditTexts()
             }
 
         // Max value EditText
         viewHolder.maxValueEditText.onFocusChangeListener =
             View.OnFocusChangeListener { _, _ ->
-                viewHolder.valueSeekBar.progress = round(valueToPercent(getValue(), getMin(), getMax()) * viewHolder.valueSeekBar.max).toInt()
+                val newMax = viewHolder.maxValueEditText.text.toString().toFloat()
+                val min = viewHolder.minValueEditText.text.toString().toFloat()
+                if (newMax <= min)
+                    viewHolder.maxValueEditText.setText((min + 1).toString())
+                updateSeekBarFromEditTexts()
             }
     }
 
@@ -116,15 +138,8 @@ class PIDTuningListAdapter(context: Context, resource: Int, textViewResourceId: 
         val maxValueEditText: EditText
     )
 
-    fun seekBarToValue(seekBar: SeekBar, min: Float, max: Float): Float {
-        val seekBarMax = seekBar.max
-        val seekBarPercent: Float = seekBar.progress.toFloat() / seekBarMax
-        val dist = max - min
-        return (seekBarPercent * dist) + min
-    }
-
     // [0.0 - 1.0]
-    fun valueToPercent(value: Float, min: Float, max: Float): Float {
+    private fun valueToPercent(value: Float, min: Float, max: Float): Float {
         if (max <= min)
             throw Exception("Max have to be greater than min!")
         return (value - min) / (max - min)
