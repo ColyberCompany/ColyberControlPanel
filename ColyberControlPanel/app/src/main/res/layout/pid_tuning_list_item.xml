@@ -95,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Max:"
-        android:textSize="8sp"
+        android:textSize="11sp"
         app:layout_constraintStart_toStartOf="@+id/pidMaxValueEditText"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -104,7 +104,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Min:"
-        android:textSize="8sp"
+        android:textSize="11sp"
         app:layout_constraintStart_toStartOf="@+id/pidMinValueEditText"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -113,7 +113,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Value:"
-        android:textSize="8sp"
+        android:textSize="11sp"
         app:layout_constraintStart_toStartOf="@+id/pidValueEditText"
         app:layout_constraintTop_toTopOf="parent" />
 

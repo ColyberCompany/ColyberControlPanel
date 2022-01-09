@@ -30,6 +30,10 @@ object UDPConn {
             callback(true)
     }
 
+    fun sendPID() {
+        // TODO: implement
+    }
+
 
     private class UDPConnectAsyncTask (callback: (Boolean) -> Unit) : AsyncTask<Void, Void, Void>() {
         var connectingResult = false

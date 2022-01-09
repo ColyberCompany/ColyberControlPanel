@@ -6,21 +6,58 @@
     android:layout_height="match_parent"
     tools:context=".PIDTuningActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PIDTuning"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
     <ListView
         android:id="@+id/pidComponentsListView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/pidControllerSpinner" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Controller:"
+        android:textColor="@color/gray"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toTopOf="@+id/pidControllerSpinner"
+        app:layout_constraintStart_toStartOf="@+id/pidControllerSpinner" />
+
+    <Spinner
+        android:id="@+id/pidControllerSpinner"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/sendButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:onClick="sendButtonOnClick"
+        android:text="Send"
+        app:layout_constraintBottom_toBottomOf="@+id/pidControllerSpinner"
+        app:layout_constraintEnd_toStartOf="@+id/autoSendingCheckbox"
+        app:layout_constraintTop_toTopOf="@+id/pidControllerSpinner" />
+
+    <CheckBox
+        android:id="@+id/autoSendingCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Auto\nsending"
+        app:layout_constraintBottom_toBottomOf="@+id/sendButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sendButton" />
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,7 +24,7 @@ private const val MaxDataPoints: Int = 50
 
 
 class SensorReadings : AppCompatActivity() {
-    private val handler: Handler = Handler(Looper.getMainLooper())
+    private val handler = Handler(Looper.getMainLooper())
 
     private lateinit var graph: GraphView
     private val series1 = LineGraphSeries<DataPoint>()
