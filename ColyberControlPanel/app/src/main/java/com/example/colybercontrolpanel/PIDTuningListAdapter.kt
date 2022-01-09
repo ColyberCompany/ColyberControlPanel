@@ -5,11 +5,11 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import kotlin.math.round
 
 class PIDTuningListAdapter(context: Context, resource: Int, textViewResourceId: Int, objects: Array<String>) : ArrayAdapter<String>(context, resource, textViewResourceId, objects) {
     private val layout: Int = resource
@@ -39,25 +39,23 @@ class PIDTuningListAdapter(context: Context, resource: Int, textViewResourceId: 
         // set pid controller name
         viewHolder.nameTextView.text = getItem(position)
 
-        setOnClicks(viewHolder)
+        setUpOnClicks(viewHolder)
 
         return convertView
     }
 
-    private fun setOnClicks(viewHolder: PIDViewHolder) {
-        // Value EditText
-        viewHolder.valueEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
+    private fun setUpOnClicks(viewHolder: PIDViewHolder) {
+        fun getMin(): Float {
+            return viewHolder.minValueEditText.text.toString().toFloat()
+        }
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
+        fun getMax(): Float {
+            return viewHolder.maxValueEditText.text.toString().toFloat()
+        }
 
-            override fun afterTextChanged(p0: Editable?) {
-                Log.e("asdf", "value + ${viewHolder.valueEditText.text}")
-            }
-
-        })
+        fun getValue(): Float {
+            return viewHolder.valueEditText.text.toString().toFloat()
+        }
 
         // Set 0 CheckBox
         viewHolder.setZeroCheckBox.setOnClickListener {
@@ -83,24 +81,27 @@ class PIDTuningListAdapter(context: Context, resource: Int, textViewResourceId: 
 
         // Value SeekBar
         viewHolder.valueSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onStartTrackingTouch(p0: SeekBar?) {}
+            override fun onStopTrackingTouch(p0: SeekBar?) {}
+
             override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
-                val min = viewHolder.minValueEditText.text.toString().toFloat()
-                val max = viewHolder.maxValueEditText.text.toString().toFloat()
-                viewHolder.valueEditText.setText(seekBarToValue(viewHolder.valueSeekBar, min, max).toString())
+                // the only place where valueEditText is updated. Seek bar stores the actual value
+                val newValue = seekBarToValue(viewHolder.valueSeekBar, getMin(), getMax())
+                viewHolder.valueEditText.setText((round(newValue * 100) / 100).toString())
             }
-
-            override fun onStartTrackingTouch(p0: SeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(p0: SeekBar?) {
-            }
-
         })
 
         // Min value EditText
+        viewHolder.minValueEditText.onFocusChangeListener =
+            View.OnFocusChangeListener { _, _ ->
+                viewHolder.valueSeekBar.progress = round(valueToPercent(getValue(), getMin(), getMax()) * viewHolder.valueSeekBar.max).toInt()
+            }
 
         // Max value EditText
-
+        viewHolder.maxValueEditText.onFocusChangeListener =
+            View.OnFocusChangeListener { _, _ ->
+                viewHolder.valueSeekBar.progress = round(valueToPercent(getValue(), getMin(), getMax()) * viewHolder.valueSeekBar.max).toInt()
+            }
     }
 
 
@@ -120,5 +121,12 @@ class PIDTuningListAdapter(context: Context, resource: Int, textViewResourceId: 
         val seekBarPercent: Float = seekBar.progress.toFloat() / seekBarMax
         val dist = max - min
         return (seekBarPercent * dist) + min
+    }
+
+    // [0.0 - 1.0]
+    fun valueToPercent(value: Float, min: Float, max: Float): Float {
+        if (max <= min)
+            throw Exception("Max have to be greater than min!")
+        return (value - min) / (max - min)
     }
 }
