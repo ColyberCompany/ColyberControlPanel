@@ -38,10 +38,8 @@ class PIDTuningActivity : AppCompatActivity() {
 
         // Setup the ListView
         val listView = findViewById<ListView>(R.id.pidComponentsListView)
-        Log.e("asdf", "start")
         val pidComponentsAdapter = PIDTuningListAdapter(this, R.layout.pid_tuning_list_item, R.id.pidPartName, pidControllersComponents)
         listView.adapter = pidComponentsAdapter
-        Log.e("asdf", "end")
     }
 
     private val pidControllersSpinnerOnItemSelect = object : AdapterView.OnItemSelectedListener {
@@ -68,7 +66,6 @@ class PIDTuningActivity : AppCompatActivity() {
     private val autoSendingRunnable = object : Runnable {
         override fun run() {
             UDPConn.sendPID()
-            Log.e("asdf", "dziala")
 
             handler.postDelayed(this, AutoSendingInterval)
         }
