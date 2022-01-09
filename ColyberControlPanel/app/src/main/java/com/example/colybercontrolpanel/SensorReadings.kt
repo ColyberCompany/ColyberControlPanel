@@ -24,7 +24,7 @@ private const val MaxDataPoints: Int = 50
 
 
 class SensorReadings : AppCompatActivity() {
-    private val handler: Handler = Handler(Looper.getMainLooper())
+    private val handler = Handler(Looper.getMainLooper())
 
     private lateinit var graph: GraphView
     private val series1 = LineGraphSeries<DataPoint>()
@@ -52,7 +52,7 @@ class SensorReadings : AppCompatActivity() {
 
     private var fullscreenChartFlag = false
 
-    private var plotType: PlotType = PlotType.AngleXY // TODO: add setting plot type
+    private var plotType: PlotType = PlotType.AngleXY
 
 
 
@@ -118,6 +118,7 @@ class SensorReadings : AppCompatActivity() {
         Log.e("as", edittext.text.toString())
 
         val intent = Intent(this, DronePosition::class.java)
+        //val intent = Intent(this, PIDTuningActivity::class.java)
         startActivity(intent)
     }
 
