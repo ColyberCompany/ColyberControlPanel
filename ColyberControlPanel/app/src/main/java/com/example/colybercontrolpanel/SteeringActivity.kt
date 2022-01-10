@@ -16,7 +16,8 @@ class SteeringActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_steering)
 
-        leftJoystick = findViewById()
+        leftJoystick = findViewById(R.id.leftJoystick)
+        rightJoystick = findViewById(R.id.rightJoystick)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

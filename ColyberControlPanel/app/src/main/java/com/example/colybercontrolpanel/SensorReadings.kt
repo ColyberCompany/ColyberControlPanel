@@ -1,6 +1,7 @@
 package com.example.colybercontrolpanel
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -54,8 +55,6 @@ class SensorReadings : AppCompatActivity() {
     private lateinit var angleYEditText: EditText
     private lateinit var angleZEditText: EditText
 
-    private var fullscreenChartFlag = false
-
     private var plotType: PlotType = PlotType.AngleXY
 
 
@@ -66,6 +65,8 @@ class SensorReadings : AppCompatActivity() {
 
         findViews()
         setUpGraph()
+
+        setChartFullscreen(Globals.fullscreenChartFlag)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -102,13 +103,21 @@ class SensorReadings : AppCompatActivity() {
     }
 
     fun chartOnClick(view: View) {
+        toggleChartFullscreen()
+    }
+
+    fun toggleChartFullscreen() {
+        setChartFullscreen(!Globals.fullscreenChartFlag)
+    }
+
+    fun setChartFullscreen(fullscreenFlag: Boolean) {
         val params = graph.layoutParams as ConstraintLayout.LayoutParams
 
-        if (fullscreenChartFlag) {
+        if (fullscreenFlag) {
             params.topToTop = ConstraintLayout.LayoutParams.UNSET
             params.topToBottom = angleYEditText.id
 
-            //requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         }
         else {
             //params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
@@ -116,10 +125,10 @@ class SensorReadings : AppCompatActivity() {
             //params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
             params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
 
-            //requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
 
-        fullscreenChartFlag = !fullscreenChartFlag
+        Globals.fullscreenChartFlag = fullscreenFlag
         graph.requestLayout()
     }
 

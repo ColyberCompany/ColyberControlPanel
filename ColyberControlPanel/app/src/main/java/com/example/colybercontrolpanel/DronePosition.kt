@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.preference.PreferenceManager
-import android.view.View
 import androidx.core.app.ActivityCompat
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
@@ -87,7 +86,7 @@ class DronePosition : AppCompatActivity() {
         }
     }
 
-    fun pinToDroneOnClick(view: View)
+    fun pinToDroneOnClick()
     {
         // TODO: implement pin to drone onClick
         val mapController = map.controller

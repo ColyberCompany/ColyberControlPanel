@@ -4,6 +4,8 @@ object Globals {
     var DroneIPAddress = ""
     var DronePort: Int = 0
 
+    var fullscreenChartFlag = false
+
     object DroneData {
         // sensors
         var accX = 0.0f
