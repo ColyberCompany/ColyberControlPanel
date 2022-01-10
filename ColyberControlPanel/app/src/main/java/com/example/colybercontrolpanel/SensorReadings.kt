@@ -106,26 +106,26 @@ class SensorReadings : AppCompatActivity() {
         toggleChartFullscreen()
     }
 
-    fun toggleChartFullscreen() {
+    private fun toggleChartFullscreen() {
         setChartFullscreen(!Globals.fullscreenChartFlag)
     }
 
-    fun setChartFullscreen(fullscreenFlag: Boolean) {
+    private fun setChartFullscreen(fullscreenFlag: Boolean) {
         val params = graph.layoutParams as ConstraintLayout.LayoutParams
 
         if (fullscreenFlag) {
-            params.topToTop = ConstraintLayout.LayoutParams.UNSET
-            params.topToBottom = angleYEditText.id
-
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-        }
-        else {
             //params.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
             //params.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
             //params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
             params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
 
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        }
+        else {
+            params.topToTop = ConstraintLayout.LayoutParams.UNSET
+            params.topToBottom = angleYEditText.id
+
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         }
 
         Globals.fullscreenChartFlag = fullscreenFlag
