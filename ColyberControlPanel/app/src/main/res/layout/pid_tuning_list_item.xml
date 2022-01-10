@@ -18,11 +18,13 @@
     <EditText
         android:id="@+id/pidValueEditText"
         android:layout_width="70dp"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_marginStart="4dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:text="0.0"
+        android:background="@drawable/back"
+        android:textAlignment="center"
         app:layout_constraintStart_toEndOf="@+id/pidPartName"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 

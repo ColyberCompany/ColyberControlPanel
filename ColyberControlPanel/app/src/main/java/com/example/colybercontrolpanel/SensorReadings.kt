@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -18,6 +20,8 @@ import com.jjoe64.graphview.series.LineGraphSeries
 // Simple LineChart getting started: https://weeklycoding.com/mpandroidchart-documentation/getting-started/
 
 // Finally used graph library: https://github.com/jjoe64/GraphView
+
+// How to make menu: https://stackoverflow.com/questions/27855673/how-to-add-menu-and-settings-option-to-the-customized-title-bar-of-android/27916832
 
 private const val UpdateValuesTimerInterval: Long = 50
 private const val MaxDataPoints: Int = 50
@@ -60,40 +64,31 @@ class SensorReadings : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sensor_readings)
 
-        accXEditText = findViewById(R.id.editTextAccX)
-        accYEditText = findViewById(R.id.editTextAccY)
-        accZEditText = findViewById(R.id.editTextAccZ)
-        gyroXEditText = findViewById(R.id.editTextGyroX)
-        gyroYEditText = findViewById(R.id.editTextGyroY)
-        gyroZEditText = findViewById(R.id.editTextGyroZ)
-        magnXEditText = findViewById(R.id.editTextMagnX)
-        magnYEditText = findViewById(R.id.editTextMagnY)
-        magnZEditText = findViewById(R.id.editTextMagnZ)
-        pressureEditText = findViewById(R.id.editTextPressure)
-        bottomRangefinderEditText = findViewById(R.id.editTextBtmRangefinder)
-        longitudeEditText = findViewById(R.id.editTextPosLong)
-        latitudeEditText = findViewById(R.id.editTextPosLat)
-        altitudeEditText = findViewById(R.id.editTextPosAlt)
-        angleXEditText = findViewById(R.id.editTextAngleX)
-        angleYEditText = findViewById(R.id.editTextAngleY)
-        angleZEditText = findViewById(R.id.editTextAngleZ)
+        findViews()
+        setUpGraph()
+    }
 
-        graph = findViewById(R.id.graph)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.main, menu)
+        return true
+    }
 
-        graph.addSeries(series1)
-        graph.addSeries(series2)
-        graph.addSeries(series3)
-        graph.viewport.apply {
-            isXAxisBoundsManual = true
-            setMinX(0.0)
-            setMaxX(MaxDataPoints.toDouble())
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val intent: Intent? = when (item.itemId) {
+            R.id.menuSensorsReadings -> null
+            R.id.menuPIDTuning -> Intent(this, PIDTuningActivity::class.java)
+            R.id.menuMap -> Intent(this, DronePosition::class.java)
+            R.id.menuSteering -> Intent(this, SteeringActivity::class.java)
+            else -> null
         }
 
-        series1.color = Color.RED
-        series2.color = Color.GREEN
-        series3.color = Color.BLUE
+        if (intent != null){
+            finish()
+            startActivity(intent)
+        }
 
-        graph.setBackgroundColor(Color.WHITE)
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {
@@ -104,22 +99,6 @@ class SensorReadings : AppCompatActivity() {
     override fun onPause() {
         handler.removeCallbacks(updateReadings)
         super.onPause()
-    }
-
-    // TODO: remove this onClick
-    fun testOnClick(view: View) {
-        Log.e("asdf", "qwer")
-        val edittext: EditText
-        if (view is EditText)
-            edittext = view
-        else
-            return
-
-        Log.e("as", edittext.text.toString())
-
-        val intent = Intent(this, DronePosition::class.java)
-        //val intent = Intent(this, PIDTuningActivity::class.java)
-        startActivity(intent)
     }
 
     fun chartOnClick(view: View) {
@@ -246,6 +225,45 @@ class SensorReadings : AppCompatActivity() {
 
         lastXValue += 1.0 // move chart to the next sample
         lastXValue += 1.0 // move chart to the next sample
+    }
+
+    private fun findViews() {
+        accXEditText = findViewById(R.id.editTextAccX)
+        accYEditText = findViewById(R.id.editTextAccY)
+        accZEditText = findViewById(R.id.editTextAccZ)
+        gyroXEditText = findViewById(R.id.editTextGyroX)
+        gyroYEditText = findViewById(R.id.editTextGyroY)
+        gyroZEditText = findViewById(R.id.editTextGyroZ)
+        magnXEditText = findViewById(R.id.editTextMagnX)
+        magnYEditText = findViewById(R.id.editTextMagnY)
+        magnZEditText = findViewById(R.id.editTextMagnZ)
+        pressureEditText = findViewById(R.id.editTextPressure)
+        bottomRangefinderEditText = findViewById(R.id.editTextBtmRangefinder)
+        longitudeEditText = findViewById(R.id.editTextPosLong)
+        latitudeEditText = findViewById(R.id.editTextPosLat)
+        altitudeEditText = findViewById(R.id.editTextPosAlt)
+        angleXEditText = findViewById(R.id.editTextAngleX)
+        angleYEditText = findViewById(R.id.editTextAngleY)
+        angleZEditText = findViewById(R.id.editTextAngleZ)
+
+        graph = findViewById(R.id.graph)
+    }
+
+    private fun setUpGraph() {
+        graph.addSeries(series1)
+        graph.addSeries(series2)
+        graph.addSeries(series3)
+        graph.viewport.apply {
+            isXAxisBoundsManual = true
+            setMinX(0.0)
+            setMaxX(MaxDataPoints.toDouble())
+        }
+
+        series1.color = Color.RED
+        series2.color = Color.GREEN
+        series3.color = Color.BLUE
+
+        graph.setBackgroundColor(Color.WHITE)
     }
 
     enum class PlotType {

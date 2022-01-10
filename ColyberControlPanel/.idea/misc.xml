@@ -3,13 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/janwi/Documents/GitHub/ColyberCompany/ColyberControlPanel/ColyberControlPanel/app/src/main/res/drawable/back.xml" value="0.5755208333333334" />
         <entry key="..\:/Users/janwi/Documents/GitHub/ColyberCompany/ColyberControlPanel/ColyberControlPanel/app/src/main/res/layout/activity_drone_position.xml" value="0.26132246376811596" />
         <entry key="..\:/Users/janwi/Documents/GitHub/ColyberCompany/ColyberControlPanel/ColyberControlPanel/app/src/main/res/layout/activity_main.xml" value="0.25833333333333336" />
         <entry key="..\:/Users/janwi/Documents/GitHub/ColyberCompany/ColyberControlPanel/ColyberControlPanel/app/src/main/res/layout/activity_pidtuning.xml" value="0.27203647416413373" />
         <entry key="..\:/Users/janwi/Documents/GitHub/ColyberCompany/ColyberControlPanel/ColyberControlPanel/app/src/main/res/layout/activity_sensor_readings.xml" value="0.27203647416413373" />
+        <entry key="..\:/Users/janwi/Documents/GitHub/ColyberCompany/ColyberControlPanel/ColyberControlPanel/app/src/main/res/layout/activity_steering.xml" value="0.27203647416413373" />
         <entry key="..\:/Users/janwi/Documents/GitHub/ColyberCompany/ColyberControlPanel/ColyberControlPanel/app/src/main/res/layout/fragment_item_list.xml" value="0.5453125" />
         <entry key="..\:/Users/janwi/Documents/GitHub/ColyberCompany/ColyberControlPanel/ColyberControlPanel/app/src/main/res/layout/fragment_p_i_d_tuning_list_item.xml" value="0.559375" />
         <entry key="..\:/Users/janwi/Documents/GitHub/ColyberCompany/ColyberControlPanel/ColyberControlPanel/app/src/main/res/layout/pid_tuning_list_item.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/janwi/Documents/GitHub/ColyberCompany/ColyberControlPanel/ColyberControlPanel/app/src/main/res/menu/main.xml" value="0.559375" />
       </map>
     </option>
   </component>

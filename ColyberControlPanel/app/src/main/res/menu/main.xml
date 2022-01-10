@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuSensorsReadings"
+        android:title="Sensors readings"/>
+
+    <item
+        android:id="@+id/menuPIDTuning"
+        android:title="PID Tuning"/>
+
+    <item
+        android:id="@+id/menuMap"
+        android:title="Map"/>
+
+    <item
+        android:id="@+id/menuSteering"
+        android:title="Steering"/>
+
+</menu>
