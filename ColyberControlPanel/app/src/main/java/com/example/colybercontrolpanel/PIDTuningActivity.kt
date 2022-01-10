@@ -1,10 +1,13 @@
 package com.example.colybercontrolpanel
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 
@@ -40,6 +43,29 @@ class PIDTuningActivity : AppCompatActivity() {
         val listView = findViewById<ListView>(R.id.pidComponentsListView)
         val pidComponentsAdapter = PIDTuningListAdapter(this, R.layout.pid_tuning_list_item, R.id.pidPartName, pidControllersComponents)
         listView.adapter = pidComponentsAdapter
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val intent: Intent? = when (item.itemId) {
+            R.id.menuSensorsReadings -> Intent(this, SensorReadings::class.java)
+            R.id.menuPIDTuning -> null
+            R.id.menuMap -> Intent(this, DronePosition::class.java)
+            R.id.menuSteering -> Intent(this, SteeringActivity::class.java)
+            else -> null
+        }
+
+        if (intent != null){
+            finish()
+            startActivity(intent)
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private val pidControllersSpinnerOnItemSelect = object : AdapterView.OnItemSelectedListener {

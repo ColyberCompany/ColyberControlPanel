@@ -1,7 +1,10 @@
 package com.example.colybercontrolpanel
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.preference.PreferenceManager
 import android.view.View
 import androidx.core.app.ActivityCompat
@@ -34,15 +37,36 @@ class DronePosition : AppCompatActivity() {
         mapController.setCenter(startPoint);
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val intent: Intent? = when (item.itemId) {
+            R.id.menuSensorsReadings -> Intent(this, SensorReadings::class.java)
+            R.id.menuPIDTuning -> Intent(this, PIDTuningActivity::class.java)
+            R.id.menuMap -> null
+            R.id.menuSteering -> Intent(this, SteeringActivity::class.java)
+            else -> null
+        }
+
+        if (intent != null){
+            finish()
+            startActivity(intent)
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onPause() {
         super.onPause()
-
         map.onPause()
     }
 
     override fun onResume() {
         super.onResume()
-
         map.onResume()
     }
 

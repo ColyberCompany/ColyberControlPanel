@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ColyberControlPanel">
         <activity
+            android:name=".SteeringActivity"
+            android:exported="false" />
+        <activity
             android:name=".PIDTuningActivity"
             android:exported="false" />
         <activity
