@@ -7,6 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import io.github.controlwear.virtual.joystick.android.JoystickView
 
+// Joystick library: https://github.com/controlwear/virtual-joystick-android
+
 class SteeringActivity : AppCompatActivity() {
 
     private lateinit var leftJoystick: JoystickView
