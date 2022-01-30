@@ -24,14 +24,14 @@ class MainActivity : AppCompatActivity() {
         // TODO: check if ip address is valid
         val port = findViewById<EditText>(R.id.ipPortEditText).text.toString()
 
-        if (Globals.validateIPAddress(ipAddress))
+        if (Validator.validateIPAddress(ipAddress))
             Globals.DroneIPAddress = ipAddress
         else {
             Toast.makeText(this, "Invalid IP address", Toast.LENGTH_LONG).show()
             return
         }
 
-        if (port.isDigitsOnly())
+        if (Validator.validateIPPort(port))
             Globals.DronePort = port.toInt()
         else {
             Toast.makeText(this, "Invalid port", Toast.LENGTH_LONG).show()

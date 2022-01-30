@@ -34,7 +34,7 @@ class PIDTuningActivity : AppCompatActivity() {
 
         // Set up pid controllers Spinner
         val pidControllersSpinnerAdapter =
-            ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, pidControllersList)
+            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, pidControllersList)
         pidControllerSpinner.adapter = pidControllersSpinnerAdapter
         pidControllerSpinner.onItemSelectedListener = pidControllersSpinnerOnItemSelect
         autoSendingCheckBox.setOnCheckedChangeListener(onAutoSendingCheckChange)

@@ -28,12 +28,4 @@ object Globals {
         var longitude = 0.0f
         var altitude = 0.0f
     }
-
-
-    fun validateIPAddress(ipAddress: String): Boolean {
-        for (byte: Char in ipAddress)
-            if (!byte.isDigit() && byte != '.')
-                return false
-        return true
-    }
 }

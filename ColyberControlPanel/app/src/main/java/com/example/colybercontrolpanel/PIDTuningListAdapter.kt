@@ -138,10 +138,14 @@ class PIDTuningListAdapter(context: Context, resource: Int, textViewResourceId: 
         val maxValueEditText: EditText
     )
 
-    // [0.0 - 1.0]
-    private fun valueToPercent(value: Float, min: Float, max: Float): Float {
-        if (max <= min)
-            throw Exception("Max have to be greater than min!")
-        return (value - min) / (max - min)
+
+    companion object {
+        // [0.0 - 1.0]
+        fun valueToPercent(value: Float, min: Float, max: Float): Float {
+            if (max <= min)
+                throw Exception("Max have to be greater than min!")
+            return (value - min) / (max - min)
+        }
     }
+
 }
