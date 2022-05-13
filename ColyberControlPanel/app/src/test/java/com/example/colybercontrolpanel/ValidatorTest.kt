@@ -11,10 +11,16 @@ class ValidatorTest {
 
         result = Validator.validateIPAddress("1.1.1.1")
         assertTrue(result)
+
+        result = Validator.validateIPAddress("255.255.255.255")
+        assertTrue(result)
+
+        result = Validator.validateIPAddress("255.1.1.1")
+        assertTrue(result)
     }
 
     @Test
-    fun invalidIPAddressTest() {
+    fun invalidIPAddressTest1() {
         var result = Validator.validateIPAddress("192")
         assertFalse(result)
 
@@ -37,6 +43,24 @@ class ValidatorTest {
         assertFalse(result)
 
         result = Validator.validateIPAddress("192...")
+        assertFalse(result)
+    }
+
+    @Test
+    fun invalidIPAddressTest2() {
+        var result = Validator.validateIPAddress("192.168.0.1 ")
+        assertFalse(result)
+
+        result = Validator.validateIPAddress("1.1. 1.1")
+        assertFalse(result)
+
+        result = Validator.validateIPAddress("1.1 .1.1")
+        assertFalse(result)
+
+        result = Validator.validateIPAddress("2 55.255.255.255")
+        assertFalse(result)
+
+        result = Validator.validateIPAddress("255 . 1 . 1 . 1 ")
         assertFalse(result)
     }
 
